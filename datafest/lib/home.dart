@@ -1,7 +1,11 @@
+import 'package:datafest/tabs/book/book_tab.dart';
+import 'package:datafest/tabs/profile/profile_tab.dart';
+import 'package:datafest/tabs/search/search_tab.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({Key? key, required this.title})
+      : super(key: key); // 'const' removed here
 
   final String title;
 
@@ -10,22 +14,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0; // New
+  int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    // Placeholder Widgets for Navigation Bar Tabs
-    Text(
-      'Search Tab',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    ),
-    Text(
-      'Book Tab',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    ),
-    Text(
-      'Profile Tab',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    ),
+  static final List<Widget> _widgetOptions = <Widget>[
+    // 'const' removed here
+    SearchTab(),
+    BookTab(),
+    ProfileTab(),
   ];
 
   void _onItemTapped(int index) {
@@ -38,35 +33,39 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.red[200],
         title: Row(
           children: [
             Image.asset(
-              'assets/kata_icon.png', // Replace with your icon asset
+              'assets/kata_icon.png', // Make sure this asset is in the correct directory
               fit: BoxFit.contain,
-              height: 32,
+              height: 50,
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              child: Text(widget.title),
-            )
+              child: RichText(
+                text: const TextSpan(
+                  style: TextStyle(fontSize: 25), // Directly set the font size
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Course',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: 'Kata',
+                      style: TextStyle(color: Colors.lightBlue),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              // Implement profile action
-            },
-          ),
-        ],
       ),
-      body: Center(
-        // New
-        child: _widgetOptions.elementAt(_selectedIndex), // New
-      ),
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
+          // 'const' can remain here because BottomNavigationBarItem has a const constructor
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
@@ -80,28 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex, // New
-        selectedItemColor: Colors.blueAccent, // New
-        onTap: _onItemTapped, // New
-      ),
-    );
-  }
-}
-
-class SearchField extends StatelessWidget {
-  const SearchField();
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(),
-        ),
-        prefixIcon: Icon(Icons.search),
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.red[400],
+        onTap: _onItemTapped,
       ),
     );
   }

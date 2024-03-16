@@ -24,9 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         // You can add more theme data that fits your design
       ),
-      home: const MyHomePage(title: 'CourseKata'),
+      home: MyHomePage(title: 'CourseKata'),
     );
   }
 }
-
-// ...Include your MyHomePage class here...
