@@ -13,11 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CourseKata',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.redAccent,
-        ),
         useMaterial3: true,
         textTheme: const TextTheme(
           // Define the default brightness and colors.

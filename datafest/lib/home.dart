@@ -10,11 +10,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0; // New
+
+  static List<Widget> _widgetOptions = <Widget>[
+    // Placeholder Widgets for Navigation Bar Tabs
+    Text(
+      'Search Tab',
+      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Book Tab',
+      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Profile Tab',
+      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.lightBlueAccent,
         title: Row(
           children: [
             Image.asset(
@@ -30,49 +54,47 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
               // Implement profile action
             },
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 20),
-            Text(
-              'Find Your Course Materials',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey),
-            ),
-            SizedBox(height: 20),
-            SearchField(title: 'Search for Institution'),
-            SizedBox(height: 20),
-            SearchField(title: 'Search for Course'),
-            SizedBox(height: 20),
-            SearchField(title: 'Search for Textbook'),
-            // Add more widgets as needed
-          ],
-        ),
+      body: Center(
+        // New
+        child: _widgetOptions.elementAt(_selectedIndex), // New
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Book',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex, // New
+        selectedItemColor: Colors.blueAccent, // New
+        onTap: _onItemTapped, // New
       ),
     );
   }
 }
 
 class SearchField extends StatelessWidget {
-  final String title;
-
-  const SearchField({required this.title});
+  const SearchField();
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        labelText: title,
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(
